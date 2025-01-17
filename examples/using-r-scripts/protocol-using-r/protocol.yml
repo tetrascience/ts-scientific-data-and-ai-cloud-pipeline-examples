@@ -1,0 +1,11 @@
+protocolSchema: "v3"
+name: "Using R in Pipeline"
+description: "Protocol that does R calculations and runs an R script"
+
+steps:
+  - id: use-r-step
+    task:
+      namespace: private-training-jkarnowski2
+      slug: using-r
+      version: v0.1.0
+      function: use-r
