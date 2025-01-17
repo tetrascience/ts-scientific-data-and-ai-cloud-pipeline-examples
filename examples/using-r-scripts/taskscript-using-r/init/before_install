@@ -1,0 +1,5 @@
+#!/bin/bash
+
+apt-get update && apt-get install -y r-base r-base-core
+pip install rpy2
+pip install numpy

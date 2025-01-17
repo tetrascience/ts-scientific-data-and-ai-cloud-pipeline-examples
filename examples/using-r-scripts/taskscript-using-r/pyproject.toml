@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "taskscript-using-r"
+version = "0.1.0"
+description = ""
+authors = ["Jeremy Karnowski <jkarnowski@tetrascience.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+numpy = "^2.2.1"
+rpy2 = "^3.5.17"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
