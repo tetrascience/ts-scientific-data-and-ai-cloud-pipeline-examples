@@ -12,7 +12,7 @@ Our [Developer Documentation](https://developers.tetrascience.com/docs/self-serv
 
 Current Examples in this repo:
 
-* [Using R Scripts in Tetra Pipeline](https://github.com/tetrascience/ts-scientific-data-and-ai-cloud-pipeline-examples/examples/using-r-scripts)
+* [Using R Scripts in Tetra Pipeline](https://github.com/tetrascience/ts-scientific-data-and-ai-cloud-pipeline-examples/tree/main/examples/using-r-scripts)
 
 ## Contribute
 
