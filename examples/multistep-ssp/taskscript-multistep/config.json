@@ -1,0 +1,26 @@
+{
+    "language": "python",
+    "functions": [
+        {
+            "slug": "print-hello-world",
+            "function": "main.print_hello_world"
+        },
+        {
+            "slug": "decorate-input-file",
+            "function": "main.decorate_input_file"
+        },
+        {
+            "slug": "harmonize-input-file",
+            "function": "main.harmonize_input_file"
+        },
+        {
+            "slug": "enrich-input-file",
+            "function": "main.enrich_input_file"
+        },
+        {
+            "slug": "push-data",
+            "function": "main.push_data"
+        }
+    ]
+}
+

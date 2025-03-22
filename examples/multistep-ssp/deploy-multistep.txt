@@ -1,0 +1,38 @@
+# Deploy Task Script: Modify with your information and deploy
+ts-cli publish --type task-script \
+                --namespace private-{TDP ORG} \
+                --slug taskscript-multistep \
+                --version v1.0.0 {task-script-folder} \
+                -c {auth-folder}/auth.json
+
+# Deploy Protocol: Modify with your information and deploy
+ts-cli publish --type protocol \
+                --namespace private-{TDP ORG} \
+                --slug protocol-multistep \
+                --version v1.0.0 \
+                {protocol-folder} \
+                -c {auth-folder}/auth.json
+
+# Create API info for Kaggle and add to Shared Settings
+# https://www.kaggle.com/settings
+# remove quotes from API key in shared settings
+
+# Create Pipeline: 
+# Use the Shared Settings from above
+# Add the following information to the config item for labels
+[
+  {
+    "name": "test_label_name1",
+    "value": "test_value1"
+  },
+  {
+    "name": "test_label_name2",
+    "value": "test_value2"
+  }
+]
+
+# Add enrichment-file.txt to TDP with label:
+# enrichment-file: enrichment-file
+
+# Add file (ssp-demo.json) that will trigger pipeline with :
+# Source Type: ssp-demo
