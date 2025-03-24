@@ -1,0 +1,57 @@
+protocolSchema: "v3"
+name: "Multistep - v3 protocol"
+description: "Protocol that decorates, harmonizes, enriches, and pushes to 3rd party."
+
+config:
+  labels_json:
+    label: "Labels that can be added to file."
+    description: "A json of labels that can be added to a file"
+    type: "object"
+    required: false
+  kaggle_username:
+    label: "Kaggle Username."
+    description: "Kaggle Username to use for pushing data."
+    type: "string"
+    required: true
+  kaggle_api_key:
+    label: "Kaggle API Key."
+    description: "Kaggle API Key to use for pushing data."
+    type: "secret"
+    required: true
+
+steps:
+  - id: decorate-input-file-step
+    task:
+      namespace: private-training
+      slug: taskscript-multistep
+      version: v1.0.0
+      function: decorate-input-file
+    input:
+      input_file_pointer: $( workflow.inputFile )
+      labels_json: $( config.labels_json )
+  - id: harmonize-input-file-step
+    task:
+      namespace: private-training
+      slug: taskscript-multistep
+      version: v1.0.0
+      function: harmonize-input-file
+    input:
+      input_file_pointer: $( steps['decorate-input-file-step'].output )
+  - id: enrich-input-file-step
+    task:
+      namespace: private-training
+      slug: taskscript-multistep
+      version: v1.0.0
+      function: enrich-input-file
+    input:
+      input_file_pointer: $( steps['harmonize-input-file-step'].output )
+  - id: push-step
+    task:
+      namespace: private-training
+      slug: taskscript-multistep
+      version: v1.0.0
+      function: push-data
+    input:
+      input_file_pointer: $( steps['enrich-input-file-step'].output )
+      kaggle_username: $( config.kaggle_username )
+      kaggle_api_key: $( config.kaggle_api_key )
