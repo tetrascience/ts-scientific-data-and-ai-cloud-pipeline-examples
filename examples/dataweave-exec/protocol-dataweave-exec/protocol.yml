@@ -1,0 +1,21 @@
+protocolSchema: "v3"
+name: "Dataweave Exec"
+description: "Protocol that lets you process an input file with a dataweave script"
+
+config:
+  dw-mapping-script:
+    label: DataWeave Transformation Script
+    description: Script to be used for DataWeave transformation.
+    type: string
+    required: true
+
+steps:
+  - id: dataweave-exec
+    task:
+      namespace: private-training
+      slug: dataweave-exec
+      version: v1.0.0
+      function: dataweave-exec
+    input:
+      input_file_pointer: $( workflow.inputFile )
+      dw_mapping_script: $( config["dw-mapping-script"] )
