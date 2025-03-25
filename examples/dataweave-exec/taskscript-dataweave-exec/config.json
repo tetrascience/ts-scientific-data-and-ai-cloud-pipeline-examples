@@ -1,0 +1,13 @@
+{
+    "language": "python",
+    "functions": [
+      {
+        "slug": "dataweave-exec",
+        "function": "main.dataweave_exec"
+      }
+    ],
+    "memoryInMB": 1024,
+    "sdkVersion": "v2",
+    "secureMode": true,
+    "runtime": "python3.11"
+  }
