@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "ts-task-script-r-exec"
+version = "0.1.0"
+description = "A TetraScience task script for running R scripts"
+authors = ["TetraScience"]
+
+[[tool.poetry.source]]
+name = "ts_pypi_virtual"
+url = "https://tetrascience.jfrog.io/artifactory/api/pypi/ts-pypi-virtual/simple"
+priority = "primary"
+
+[tool.poetry.dependencies]
+python = "~3.11"
+simplejson = ">=3.10"
+ts-task-script-utils = "^2.0.0"
+typing-extensions = "^4.5.0"
+
+[tool.poetry.group.dev.dependencies]
+black = ">=23.1.0,<24"
+isort = ">=5.0"
+pylint = "~=2.17.0"
+pytest = ">=6.0"
+pytest-cov = ">=3.0"
+jsonschema = ">=4.0"
+pre-commit = ">=2.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+
+[tool.black]
+line-length = 88
+target-version = ['py37', 'py38', 'py39', 'py310']
+include = '\.pyi?$'
+extend-exclude = ".*snapshots.*|.venv/"
+
+[tool.pytest.ini_options]
+addopts = "-vv --cov"
+testpaths = [
+    "__tests__",
+]
+
+[tool.coverage.run]
+branch = true
+source = [
+    "main",
+    "ts_task_script_r_exec"
+]
+omit = ["*/snapshots/*", "__tests__/*"]

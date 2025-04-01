@@ -1,0 +1,22 @@
+protocolSchema: v3
+name: 'R Exec'
+description: 'Executes the provided R script'
+
+config:
+  script:
+    label: 'R Script'
+    description: 'The R script to run'
+    type: string
+    required: true
+
+steps:
+  - id: 'execute-r'
+    description: 'Run the given script'
+    task:
+      namespace: 'common'
+      slug: 'r-exec'
+      version: 'v0.0.1'
+      function: 'run-r'
+    input:
+      input_file: $( workflow.inputFile )
+      script: $( config.script )
