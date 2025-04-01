@@ -1,0 +1,12 @@
+{
+  "language": "python",
+  "runtime": "python3.11",
+  "sdkVersion": "v2",
+  "secureMode": true,
+  "functions": [
+    {
+      "slug": "run-r",
+      "function": "main.main"
+    }
+  ]
+}

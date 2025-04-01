@@ -1,0 +1,7 @@
+#!/bin/bash
+
+apt-get update && apt-get install -y r-base r-base-core libssl-dev libcurl4-openssl-dev libv8-dev libxml2-dev libfontconfig1-dev pandoc libharfbuzz-dev libfribidi-dev texlive-latex-base texlive-fonts-recommended texlive-extra-utils
+pip install rpy2
+pip install numpy
+R -e 'install.packages(c("Rmarkdown","BiocManager","Rlabkey","base64enc", "zoo", "stringr", "lubridate", "glue", "tictoc", "parallel", "foreach", "doParallel", "uuid", "stringi", "data.table", "dplyr", "magrittr", "broom", "cli", "conflicted", "dbplyr", "dtplyr", "forcats","ggplot2", "haven", "hms", "jsonlite", "modelr", "pillar", "purrr", "readr", "readxl", "reprex", "rlang", "rstudioapi", "tibble", "tidyr","devtools"))'
+#R -e 'BiocManager::install("flowCore", ask = FALSE, update = TRUE)'

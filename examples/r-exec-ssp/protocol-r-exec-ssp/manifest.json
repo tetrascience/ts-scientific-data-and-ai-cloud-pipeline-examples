@@ -1,0 +1,10 @@
+{
+  "name": "R Exec",
+  "description": "Executes the provided R script",
+  "namespace": "common",
+  "slug": "r-exec",
+  "version": "v0.1.0",
+  "type": "protocol",
+  "labels": [],
+  "catalog_keys": ["any"]
+}
