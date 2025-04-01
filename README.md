@@ -12,7 +12,9 @@ Our [Developer Documentation](https://developers.tetrascience.com/docs/self-serv
 
 Current Examples in this repo:
 
-* [Using R Scripts in Tetra Pipeline](https://github.com/tetrascience/ts-scientific-data-and-ai-cloud-pipeline-examples/tree/main/examples/using-r-scripts)
+* [R-exec: Using R Scripts in Pipeline](https://github.com/tetrascience/ts-scientific-data-and-ai-cloud-pipeline-examples/tree/main/examples/r-exec-ssp)
+* [Multi-step Self-Service Pipelines Example](https://github.com/tetrascience/ts-scientific-data-and-ai-cloud-pipeline-examples/tree/main/examples/multistep-ssp)
+* [Another Example: Using R Scripts in Tetra Pipeline](https://github.com/tetrascience/ts-scientific-data-and-ai-cloud-pipeline-examples/tree/main/examples/using-r-scripts)
 
 ## Contribute
 
