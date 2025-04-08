@@ -1,0 +1,21 @@
+protocolSchema: "v3"
+name: "Testing Task Scripts - v3 protocol"
+description: "Protocol that runs all Context API calls"
+
+config:
+  password:
+    label: "Example Password"
+    description: "Example Password in Administration > Shared Settings > Add Secret"
+    type: "secret"
+    required: true
+
+steps:
+  - id: test-step
+    task:
+      namespace: private-{YOUR ORG}
+      slug: testing-taskscript
+      version: v0.1.0
+      function: use-context-api
+    input:
+      input_file_pointer: $( workflow.inputFile )
+      password: $( config.password )
