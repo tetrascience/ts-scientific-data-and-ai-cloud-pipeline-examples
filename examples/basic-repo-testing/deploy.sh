@@ -1,0 +1,2 @@
+ts-sdk put task-script private-{YOUR ORG} testing-taskscript v0.1.0 testing-taskscript -c {AUTH FOLDER}/{AUTH FILE} -f
+ts-sdk put protocol private-{YOUR ORG} testing-protocol v0.1.0 testing-protocol -c {AUTH FOLDER}/{AUTH FILE} -f
