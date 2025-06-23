@@ -1,0 +1,7 @@
+print("Create Experiment!")
+
+output = context.add_labels(input['input_file'],
+    labels=[
+        {"name": "123", "value": "data123"}
+    ]
+)

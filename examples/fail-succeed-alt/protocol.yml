@@ -1,0 +1,53 @@
+protocolSchema: "v3"
+name: "Fail Succeed - Alternative"
+description: "An example pipeline that does one thing if the first step fails, and then does a final step."
+
+config:
+  a_get_experiment:
+    label: "Get Experiment"
+    description: "Python script for first step"
+    type: "string"
+    required: true
+  b_create_experiment:
+    label: "Create Experiment"
+    description: "Python script that is run if experiment is not found."
+    type: "string"
+    required: true
+  c_send_data:
+    label: "Send Data"
+    description: "Python script that sends data."
+    type: "string"
+    required: true
+
+steps:
+  - id: get_experiment
+    task:
+      slug: python-exec
+      version: v1.0.3
+      namespace: common
+      function: run-python
+    input:
+      input_file: $( workflow.inputFile )
+      script: $( config.a_get_experiment )  
+    continueOnError: true
+
+  - id: create_experiment_and_send_data
+    if: $( steps['get_experiment'].isFailed )
+    task:
+      slug: python-exec
+      version: v1.0.3
+      namespace: common
+      function: run-python
+    input:
+      input_file: $( workflow.inputFile )
+      script: $( config.b_create_experiment )
+
+  - id: send_data
+    task:
+      slug: python-exec
+      version: v1.0.3
+      namespace: common
+      function: run-python
+    input:
+      input_file: $( workflow.inputFile )
+      script: $( config.c_send_data )

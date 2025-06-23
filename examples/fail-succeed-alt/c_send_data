@@ -1,0 +1,3 @@
+labels = context.get_labels(input['input_file'])
+label = [x["value"] for x in labels if x["name"] == "123"][0]
+print(label)
