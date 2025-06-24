@@ -1,11 +1,25 @@
 import json
 from ts_sdk.task.__task_script_runner import Context
 
+def safe_pipeline_config(pipeline_config: dict):
+    secrets = [
+        k.split(":")[1]
+        for k in pipeline_config
+        if k.startswith("_resolved_")
+    ]
+
+    return {
+        k: "********" if (k in secrets or k.startswith("_resolved_"))
+        else v
+        for k, v in pipeline_config.items()
+    }
+
 def use_context_api_actual(input: dict, context: Context):
 
+    SECRET_KEY = "password"
     # Getting inputs passed to Task Script from Protocol/Pipeline
     input_file_pointer = input["input_file_pointer"]
-    password = input["password"]
+    password = input[SECRET_KEY]
 
 
     print("========== Testing Context API Properties ==========")
@@ -17,7 +31,7 @@ def use_context_api_actual(input: dict, context: Context):
     print(f"Master Script Version: {context.master_script_version}")
     print(f"Protocol Slug: {context.protocol_slug}")
     print(f"Protocol Version: {context.protocol_version}")
-    print(f"Pipeline Config: {context.pipeline_config}")
+    print(f"Pipeline Config: {safe_pipeline_config(context.pipeline_config)}")
     print(f"Input File: {context.input_file}")
     print(f"Created At: {context.created_at}")
     print(f"Task ID: {context.task_id}")
@@ -40,7 +54,7 @@ def use_context_api_actual(input: dict, context: Context):
     read_file_output = context.read_file(context.input_file, form="body")
     read_file_contents = json.loads(read_file_output["body"])
     # print(read_file_contents)
-    
+
     logger.log("Add Labels")
     add_labels_output = context.add_labels(input_file_pointer,[{"name": "label-name", "value": "label-value"}])
     print(add_labels_output)
@@ -49,7 +63,7 @@ def use_context_api_actual(input: dict, context: Context):
     logger.log("Get Labels")
     file_labels_output = context.get_labels(input_file_pointer)
     print(file_labels_output)
-    
+
     logger.log("Get File Name")
     get_file_name_output = context.get_file_name(input_file_pointer)
     print(get_file_name_output)
@@ -73,11 +87,13 @@ def use_context_api_actual(input: dict, context: Context):
 
     logger.log("Get Secret Config Value from Config")
     get_secret_config_value_output = context.get_secret_config_value("password")
-    print(get_secret_config_value_output)
-    
+    print("********")
+
+    logger.log(f"Unresolved Secret: {password}")
+
     logger.log("Resolve Secret")
     resolve_secret_output = context.resolve_secret(password)
-    print(resolve_secret_output)
+    print("********")
 
     logger.log("Write File")
     write_file_output = context.write_file(content = json.dumps(read_file_contents),
@@ -94,7 +110,7 @@ def use_context_api_actual(input: dict, context: Context):
     print(write_ids_output)
 
     logger.log("Update Metadata Tags")
-    update_metadata_tags_output = context.update_metadata_tags(input_file_pointer, 
+    update_metadata_tags_output = context.update_metadata_tags(input_file_pointer,
                                                                 custom_meta = {'meta-key1': 'meta-value1'},
                                                                 custom_tags = ['tag1', 'tag2'])
     print(update_metadata_tags_output)
