@@ -1,0 +1,156 @@
+name: Publish Artifacts
+on:
+  workflow_dispatch:
+    inputs:
+      pipeline:
+        description: 'Top-level use case or pipeline folder name containing the task script, protocol, and/or IDS folders'
+        required: true
+      version:
+        description: 'Artifact version. Always prefix with "v" such as "v1.0.0"'
+        required: true
+      tdpenv:
+        description: 'TDP Environment'
+        required: true
+        type: choice
+        options:
+          - dev
+          - test
+          - prod
+      ids:
+        description: "Publish IDS"
+        required: true
+        type: boolean
+        default: true
+      taskscript:
+        description: "Publish task script"
+        required: true
+        type: boolean
+        default: true
+      protocol:
+        description: "Publish protocol"
+        required: true
+        type: boolean
+        default: true
+      release:
+        description: 'Create & publish from GitHub release'
+        required: true
+        type: boolean
+        default: false
+      ssl:
+        description: 'Ignore SSL'
+        required: true
+        type: boolean
+        default: false
+      force:
+        description: 'Force deploy and skip validation'
+        required: true
+        type: boolean
+        default: false
+ 
+ 
+jobs:
+  deploy-to-tdp:
+    runs-on: ubuntu-latest
+    environment: Deploy to Prod
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Display Python version - before
+        run: python -c "import sys; print(sys.version)"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          # Semantic version range syntax or exact version of a Python version
+          python-version: '>=3.9 <3.12'
+      # You can test your matrix by printing the current Python version
+      - name: Display Python version - after
+        run: python -c "import sys; print(sys.version)"
+       
+      - name: Create Release
+        if: ${{ inputs.release }}
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ inputs.pipeline }}-${{ inputs.version }}
+          release_name: Release ${{ inputs.pipeline }}-${{ inputs.version }}
+          body: Release ${{ inputs.pipeline }}-${{ inputs.version }}
+          draft: false
+          prerelease: true
+       
+      - name: Checkout Repo
+        if: ${{ inputs.release }}
+        uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ inputs.pipeline }}-${{ inputs.version }}
+     
+      - name: Configuration for PROD
+        if: ${{ inputs.tdpenv == 'prod' }}
+        run: |
+          echo "TDP_AUTH_TOKEN=${{ secrets.PROD_AUTH_TOKEN }}" >> $GITHUB_ENV
+          echo "TDP_API_URL=${{ vars.PROD_API_URL }}" >> $GITHUB_ENV
+          echo "TDP_ORG=${{ vars.PROD_ORG }}" >> $GITHUB_ENV
+      - name: Configuration for TEST
+        if: ${{ inputs.tdpenv == 'test' }}
+        run: |
+          echo "TDP_AUTH_TOKEN=${{ secrets.TEST_AUTH_TOKEN }}" >> $GITHUB_ENV
+          echo "TDP_API_URL=${{ vars.TEST_API_URL }}" >> $GITHUB_ENV
+          echo "TDP_ORG=${{ vars.TEST_ORG }}" >> $GITHUB_ENV
+      - name: Configuration for DEV
+        if: ${{ inputs.tdpenv == 'dev' }}
+        run: |
+          echo "TDP_AUTH_TOKEN=${{ secrets.DEV_AUTH_TOKEN }}" >> $GITHUB_ENV
+          echo "TDP_API_URL=${{ vars.DEV_API_URL }}" >> $GITHUB_ENV
+          echo "TDP_ORG=${{ vars.DEV_ORG }}" >> $GITHUB_ENV
+       
+      - name: Deploy to TDP
+        env:
+          AUTH_JSON: '{"api_url": "${{ env.TDP_API_URL }}", "auth_token": "${{ env.TDP_AUTH_TOKEN }}","org": "${{ env.TDP_ORG }}", "ignore_ssl": "${{ inputs.ssl }}"}'
+        run: |
+          touch auth.json
+          echo $AUTH_JSON
+          echo "$AUTH_JSON" >> ../auth.json
+          cat auth.json
+          python -m pip install --upgrade pip
+          pip install pipenv
+          pip install tetrascience-cli
+ 
+          echo "About to deploy the IDS"
+          if ${{ inputs.ids }} && [ -d "${{ github.workspace }}/${{ inputs.pipeline }}/ids" ]; then
+            if ${{ inputs.force }} ; then
+              echo 'ts-cli publish --type ids "${{ github.workspace }}/${{ inputs.pipeline }}/ids" -c ../auth.json -f --no-verify'
+              ts-cli publish --type ids "${{ github.workspace }}/${{ inputs.pipeline }}/ids" -c ../auth.json -f --no-verify
+            else
+              echo 'ts-cli publish --type ids "${{ github.workspace }}/${{ inputs.pipeline }}/ids" -c ../auth.json'
+              ts-cli publish --type ids "${{ github.workspace }}/${{ inputs.pipeline }}/ids" -c ../auth.json
+            fi
+          else
+            echo "IDS not selected or directory \"${{ github.workspace }}/${{ inputs.pipeline }}/ids\" does not exist - continuing"
+          fi
+ 
+          echo "About to deploy the task script"
+          if ${{ inputs.taskscript }} && [ -d "${{ github.workspace }}/${{ inputs.pipeline }}/task-script" ]; then
+            if ${{ inputs.force }} ; then
+              echo 'ts-cli publish --type task-script "${{ github.workspace }}/${{ inputs.pipeline }}/task-script" -c ../auth.json -f --no-verify'
+              ts-cli publish --type task-script "${{ github.workspace }}/${{ inputs.pipeline }}/task-script" -c ../auth.json -f --no-verify
+            else
+              echo 'ts-cli publish --type task-script "${{ github.workspace }}/${{ inputs.pipeline }}/task-script" -c ../auth.json'
+              ts-cli publish --type task-script "${{ github.workspace }}/${{ inputs.pipeline }}/task-script" -c ../auth.json
+            fi
+          else
+            echo "Task script not selected, or directory \"${{ github.workspace }}/${{ inputs.pipeline }}/task-script\" does not exist - continuing"
+          fi
+ 
+          echo "About to deploy the protocol"
+          if ${{ inputs.protocol }} && [ -d "${{ github.workspace }}/${{ inputs.pipeline }}/protocol" ]; then
+            if ${{ inputs.force }} ; then
+              echo 'ts-cli publish --type protocol "${{ github.workspace }}/${{ inputs.pipeline }}/protocol" -c ../auth.json -f --no-verify'
+              ts-cli publish --type protocol "${{ github.workspace }}/${{ inputs.pipeline }}/protocol" -c ../auth.json -f --no-verify
+            else
+              echo 'ts-cli publish --type protocol "${{ github.workspace }}/${{ inputs.pipeline }}/protocol" -c ../auth.json'
+              ts-cli publish --type protocol "${{ github.workspace }}/${{ inputs.pipeline }}/protocol" -c ../auth.json
+            fi
+          else
+            echo "Protocol not selected, or directory \"${{ github.workspace }}/${{ inputs.pipeline }}/protocol\" does not exist - continuing"
+          fi
