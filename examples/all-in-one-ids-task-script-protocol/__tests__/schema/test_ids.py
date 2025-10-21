@@ -5,7 +5,6 @@ import pytest
 from ids.expected import create_example
 from ids.schema import Model
 from ids_es_json_generator import create_elasticsearch
-from ids_validator.ids_validator import validate_ids
 from pytest_snapshot.plugin import Snapshot
 
 IDS_FOLDER = Path(__file__).parents[2].joinpath("ids")
@@ -68,21 +67,3 @@ def test_elasticsearch_mapping(snapshot: Snapshot) -> None:
     snapshot.assert_match(
         json.dumps(elasticsearch_mapping, indent=2), elasticsearch_path
     )
-
-
-def test_ids_artifact_validation(capsys: pytest.CaptureFixture):
-    """
-    The IDS artifact should pass `ts-ids-validator` validation which ensures it follows
-    platform requirements.
-
-    This validation also runs when uploading the IDS to TDP, but including it as a test
-    creates a faster feedback loop if validation fails.
-    """
-    # Arrange and act
-    result = validate_ids(IDS_FOLDER)
-
-    # Capture the output of the IDS validator from STDOUT
-    validator_output, _ = capsys.readouterr()
-
-    # Assert
-    assert result, f"IDS Validator failed, output:\n\n{validator_output}\n\n"

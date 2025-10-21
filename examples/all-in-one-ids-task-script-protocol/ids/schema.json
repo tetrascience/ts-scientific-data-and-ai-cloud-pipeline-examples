@@ -1,5 +1,5 @@
 {
-  "$id": "https://ids.tetrascience.com/private-example/demo-ssp/v0.1.0/schema.json",
+  "$id": "https://ids.tetrascience.com/private-{YOUR_ORG_SLUG}/demo-ssp/v0.1.0/schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "additionalProperties": false,
   "properties": {
@@ -12,7 +12,7 @@
       "type": "string"
     },
     "@idsNamespace": {
-      "const": "private-example",
+      "const": "private-{YOUR_ORG_SLUG}",
       "type": "string"
     },
     "users": {
@@ -39,19 +39,21 @@
       "description": "Metadata of the user executing a run.",
       "properties": {
         "id": {
+          "description": "Unique identifier assigned to a user.",
           "type": [
             "string",
             "null"
           ]
         },
         "name": {
+          "description": "User name.",
           "type": [
             "string",
             "null"
           ]
         },
         "type": {
-          "description": "User type like 'admin', 'manager', 'power user', 'standard user'. This information is usually from the instrument software",
+          "description": "User type like 'admin', 'manager', 'power user', 'standard user'. This information is usually from the instrument software.",
           "type": [
             "string",
             "null"

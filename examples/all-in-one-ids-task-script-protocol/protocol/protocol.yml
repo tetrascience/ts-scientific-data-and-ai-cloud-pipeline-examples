@@ -13,7 +13,7 @@ config:
 steps:
   - description: Transform example data to IDS
     task:
-      namespace: private-example
+      namespace: private-{YOUR_ORG_SLUG}
       slug: demo-ssp
       version: v0.1.0
       function: main

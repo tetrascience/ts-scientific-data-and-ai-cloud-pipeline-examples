@@ -12,7 +12,7 @@ config:
 steps:
   - id: test-step
     task:
-      namespace: private-{YOUR ORG}
+      namespace: private-jfoldager
       slug: testing-taskscript
       version: v0.1.0
       function: use-context-api

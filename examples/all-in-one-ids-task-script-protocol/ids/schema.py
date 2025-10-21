@@ -6,7 +6,7 @@ from ts_ids_core.schema import IdsSchema, SchemaExtraMetadataType, User
 
 
 class Model(IdsSchema):
-    NAMESPACE: ClassVar[str] = "private-example"
+    NAMESPACE: ClassVar[str] = "private-{YOUR_ORG_SLUG}"
     TYPE: ClassVar[str] = "demo-ssp"
     VERSION: ClassVar[str] = "v0.1.0"
 

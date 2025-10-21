@@ -1,7 +1,7 @@
 {
   "@idsType": "demo-ssp",
   "@idsVersion": "v0.1.0",
-  "@idsNamespace": "private-example",
+  "@idsNamespace": "private-{YOUR_ORG_SLUG}",
   "users": [
     {
       "name": "guest"
