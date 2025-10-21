@@ -1,0 +1,12 @@
+{
+  "name": "Self-service schema example",
+  "description": "",
+  "namespace": "private-example",
+  "slug": "demo-ssp",
+  "version": "v0.1.0",
+  "type": "ids",
+  "labels": [],
+  "catalog_keys": [
+    "any"
+  ]
+}

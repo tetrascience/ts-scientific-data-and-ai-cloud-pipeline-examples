@@ -1,0 +1,11 @@
+{
+  "@idsType": "demo-ssp",
+  "@idsVersion": "v0.1.0",
+  "@idsNamespace": "private-example",
+  "users": [
+    {
+      "name": "guest"
+    }
+  ],
+  "file": "original_file_content"
+}

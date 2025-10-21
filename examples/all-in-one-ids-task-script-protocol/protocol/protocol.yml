@@ -1,0 +1,22 @@
+protocolSchema: v3
+name: Self-service protocol example
+description: An example protocol
+
+config:
+  idsFileCategory:
+    label: IDS File Category
+    description: Optional. Default is 'IDS'. You can use 'TMP', 'PROCESSED' or 'IDS' to overwrite the file category of the IDS file created by the raw to IDS task script
+    type: string
+    required: false
+    default: IDS
+
+steps:
+  - description: Transform example data to IDS
+    task:
+      namespace: private-example
+      slug: demo-ssp
+      version: v0.1.0
+      function: main
+    input:
+      input_file_pointer: $( workflow.inputFile )
+      ids_file_category: $( config.idsFileCategory )

@@ -1,0 +1,17 @@
+{
+  "language": "python",
+  "sdkVersion": "v2",
+  "secureMode": true,
+  "runtime": "python3.11",
+  "functions": [
+    {
+      "slug": "main",
+      "function": "main.main",
+      "allowedIds": {
+        "namespace": "private-example",
+        "slug": "demo-ssp",
+        "version": "v0.1.0"
+      }
+    }
+  ]
+}

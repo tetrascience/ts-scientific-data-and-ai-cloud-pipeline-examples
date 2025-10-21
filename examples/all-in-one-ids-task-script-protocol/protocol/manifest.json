@@ -1,0 +1,12 @@
+{
+  "name": "Self-service protocol example",
+  "description": "An example protocol",
+  "namespace": "private-example",
+  "slug": "demo-ssp",
+  "version": "v0.1.0",
+  "type": "protocol",
+  "labels": [],
+  "catalog_keys": [
+    "any"
+  ]
+}
