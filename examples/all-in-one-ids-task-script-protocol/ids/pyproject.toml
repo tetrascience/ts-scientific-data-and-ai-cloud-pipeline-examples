@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "{YOUR_SLUG_PREFIX}demo-ssp-ids"
+name = "demo-ssp-ids"
 version = "0.1.0"
 description = "Self-service IDS demo"
 authors = ["Author"]
