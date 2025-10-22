@@ -1,5 +1,5 @@
 {
-  "$id": "https://ids.tetrascience.com/private-{YOUR_ORG_SLUG}/demo-ssp/v0.1.0/schema.json",
+  "$id": "https://ids.tetrascience.com/private-jfoldager/demo-ssp/v0.1.0/schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "additionalProperties": false,
   "properties": {
@@ -12,7 +12,7 @@
       "type": "string"
     },
     "@idsNamespace": {
-      "const": "private-{YOUR_ORG_SLUG}",
+      "const": "private-jfoldager",
       "type": "string"
     },
     "users": {

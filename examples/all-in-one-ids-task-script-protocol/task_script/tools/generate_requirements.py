@@ -11,7 +11,8 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-TASK_SCRIPT_ROOT = Path(__file__).parents[2]
+TASK_SCRIPT_ROOT = Path(__file__).parents[1]
+REPO_ROOT = TASK_SCRIPT_ROOT.parent
 
 
 def generate_requirements() -> None:
@@ -52,6 +53,21 @@ def generate_requirements() -> None:
             check=True,
         )
 
+        ## Build demo_ssp_ids from repo_root/ids
+        subprocess.run(
+            [
+                "poetry",
+                "build",
+                "-f",
+                "wheel",
+                "-o",
+                str(dependencies),
+                "--project",
+                str(REPO_ROOT.joinpath("ids")),
+            ],
+            check=True,
+        )
+
         # Create requirements in the format to be uploaded with the task script
         tmp_requirements = Path(tmpdir).joinpath("requirements.txt")
         subprocess.run(
@@ -69,10 +85,31 @@ def generate_requirements() -> None:
 
         requirements_path = TASK_SCRIPT_ROOT.joinpath("requirements.txt")
 
+        requirements_abs_path = tmp_requirements.read_text()
+
+        # Replace the absolute path of demo-ssp-ids with a relative path
+        # demo-ssp-ids @ file:///repos/ts-scientific-data-and-ai-cloud-pipeline-examples/examples/all-in-one-ids-task-script-protocol/task_script/dependencies/demo_ssp_ids-0.1.0-py3-none-any.whl ; python_version == "3.11" \
+
+        abs_substring = str(TASK_SCRIPT_ROOT)
+        lines = []
+        for line in requirements_abs_path.splitlines():
+            if line.startswith("demo-ssp-ids @ file") and abs_substring in line:
+                line = (
+                    "."
+                    + (
+                        line[line.index(abs_substring) :]
+                        .removeprefix(abs_substring)
+                        .split()[0]
+                    )
+                    + " \\"
+                )
+            lines.append(line)
+        requirements_relative_path = "\n".join(lines)
+
         # Add the "--find-links" option complete the requirements.txt file
         # This tells pip to look in the 'dependencies' folder for anything it can't find on PyPI
         requirements_path.write_text(
-            "--find-links dependencies\n" + tmp_requirements.read_text()
+            "--find-links dependencies\n" + requirements_relative_path
         )
 
 

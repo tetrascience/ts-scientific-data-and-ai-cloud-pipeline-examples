@@ -1,7 +1,7 @@
 {
   "name": "Self-service protocol example",
   "description": "An example protocol",
-  "namespace": "private-{YOUR_ORG_SLUG}",
+  "namespace": "private-jfoldager",
   "slug": "demo-ssp",
   "version": "v0.1.0",
   "type": "protocol",

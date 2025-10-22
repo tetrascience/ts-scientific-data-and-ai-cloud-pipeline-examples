@@ -2,6 +2,7 @@
 
 # Table of Contents <!-- omit in toc -->
 
+- [TODO bake this](#todo-bake-this)
 - [Getting started](#getting-started)
 - [Installation](#installation)
 - [Running tests and updating auto-generated files](#running-tests-and-updating-auto-generated-files)
@@ -13,6 +14,22 @@
   - [Upload protocol](#upload-protocol)
 - [Create a pipeline](#create-a-pipeline)
 - [Artifact identity (namespace, type slug and version)](#artifact-identity-namespace-type-slug-and-version)
+
+## TODO bake this
+
+replace `{YOUR_ORG_SLUG}` with your org-slug.
+
+TODO Can you upload IDS under different slug without updating type?
+
+
+```sh
+ts-cli publish ids --config {path to ts-sdk-cfg.json}
+```
+
+```sh
+generate_requirements
+ts-cli publish task_script --slug demo-ssp --version 0.1.0 --config {path to ts-sdk-cfg.json}
+```
 
 ## Getting started
 
@@ -124,6 +141,10 @@ After installing `ts-sdk` according to the documentation above, this IDS can be 
 
 ```sh
 ts-sdk put ids <namespace> <slug> <version> <artifact-folder>
+```
+
+```
+ts-cli publish ids --config {}
 ```
 
 ### Upload IDS

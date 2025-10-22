@@ -5,10 +5,10 @@
   "runtime": "python3.11",
   "functions": [
     {
-      "slug": "main",
+      "slug": "parse-file",
       "function": "main.main",
       "allowedIds": {
-        "namespace": "private-{YOUR_ORG_SLUG}",
+        "namespace": "private-jfoldager",
         "slug": "demo-ssp",
         "version": "v0.1.0"
       }

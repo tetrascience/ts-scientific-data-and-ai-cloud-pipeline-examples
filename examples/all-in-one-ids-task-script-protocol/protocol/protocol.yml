@@ -13,10 +13,10 @@ config:
 steps:
   - description: Transform example data to IDS
     task:
-      namespace: private-{YOUR_ORG_SLUG}
+      namespace: private-jfoldager
       slug: demo-ssp
       version: v0.1.0
-      function: main
+      function: parse-file
     input:
       input_file_pointer: $( workflow.inputFile )
       ids_file_category: $( config.idsFileCategory )
