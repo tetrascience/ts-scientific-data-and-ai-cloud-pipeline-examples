@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "demo-ssp-task-script"
+version = "0.1.0"
+description = "Self-service pipeline demo"
+authors = ["Author"]
+readme = "README.md"
+
+
+# TODO Update these package source(s) to your own internal package source if relevant
+[[tool.poetry.source]]
+name = "pypi"
+priority = "supplemental"
+
+[[tool.poetry.source]]
+name = "ts_pypi_virtual"
+url = "https://tetrascience.jfrog.io/artifactory/api/pypi/ts-pypi-virtual/simple"
+priority = "primary"
+
+[tool.poetry.scripts]
+generate-requirements = "tools.generate_requirements:generate_requirements"
+
+[tool.poetry.dependencies]
+python = "~3.11"
+importlib-metadata = { version = ">=5.0", python = "<3.8" }
+simplejson = ">=3.19"
+# The explicit 'source' avoids installing from public PyPI
+# Remove ts-ids-components if it's not needed
+ts-ids-components = { version = ">=0.4.1", source = "ts_pypi_virtual" }
+ts-ids-core = { version = "^1.1.2", source = "ts_pypi_virtual" }
+demo-ssp-ids = {path = "dependencies/demo_ssp_ids-0.1.0-py3-none-any.whl"}
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=6.0"
+pytest-snapshot = ">=0.6"
+jsonschema = ">=4"
+ts-ids-es-json-generator = ">=1.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
