@@ -14,17 +14,25 @@
 
 ## Quickstart
 
-The files have placeholders for `{YOUR_ORG_SLUG}` and `{YOUR_SLUG_PREFIX}` which need to be replaced.
+Before getting started, replace the following placeholders throughout the files:
 
-- Replace `{YOUR_ORG_SLUG}` with your org-slug
-- Replace `{YOUR_SLUG_PREFIX}` with your username and a hyphen, e.g., `jfoldager-`
+- `{YOUR_ORG_SLUG}` - your organization slug
+- `{YOUR_SLUG_PREFIX}` - The artifacts use the slug `{YOUR_SLUG_PREFIX}demo-ssp`. You can replace the placeholders to add a prefix to the slugs. For example, you can set this to your username followed by a hyphen, e.g., `jfoldager-`
 
-See [Installation](#installation) and [Upload artifacts to TDP](#upload-artifacts-to-tdp) for more details.
+Follow the instructions in [Speed run](#speed-run) or see the sections [Installation](#installation) and [Upload artifacts to TDP](#upload-artifacts-to-tdp) for more detailed next steps.
 
 ### Speed run
 
-> [!IMPORTANT]
+> [!NOTE]
 > The commands assume that you are in the folder `examples/all-in-one-ids-task-script-protocol`.
+>
+> Install the `ts-cli` command line tool if you don't have it already:
+>
+> ```sh
+> pipx install tetrascience-cli
+> # or if you don't have pipx:
+> pip install tetrascience-cli
+> ```
 
 Install the root package, which includes the helper tool `generate-requirements`
 
