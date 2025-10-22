@@ -27,7 +27,7 @@ simplejson = ">=3.19"
 # Remove ts-ids-components if it's not needed
 ts-ids-components = { version = ">=0.4.1", source = "ts_pypi_virtual" }
 ts-ids-core = { version = "^1.1.2", source = "ts_pypi_virtual" }
-demo-ssp-ids = {path = "dependencies/demo_ssp_ids-0.1.0-py3-none-any.whl"}
+demo-ssp-ids = {path = "../ids/"}
 
 [tool.poetry.requires-plugins]
 poetry-plugin-export = ">=1.8"

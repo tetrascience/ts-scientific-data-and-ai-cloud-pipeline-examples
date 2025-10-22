@@ -23,17 +23,26 @@ See [Installation](#installation) and [Upload artifacts to TDP](#upload-artifact
 
 ### Speed run
 
+> [!IMPORTANT]
+> The commands assume that you are in the folder `examples/all-in-one-ids-task-script-protocol`.
+
 Install the root package, which includes the helper tool `generate-requirements`
+
 ```sh
 poetry install
+
+# Install the task script. This is needed for generate-requirements to work
+poetry install --project task_script
 ```
 
-Generate requirements.txt and download private dependencies for the task script build process
+Generate requirements.txt and download private dependencies for the task script build process. These are stored in the `task_script/dependencies` folder.
+
 ```sh
 poetry run generate-requirements
 ```
 
 Deploy the IDS, task script and protocol
+
 ```sh
 ts-cli publish ids/ --config {path to ts-sdk-cfg.json}
 ts-cli publish task_script/ --config {path to ts-sdk-cfg.json}
@@ -169,7 +178,6 @@ ts-cli publish ids/ --config {path to ts-sdk-cfg.json}
 ```sh
 poetry run generate-requirements
 ts-cli publish task_script/ --config {path to ts-sdk-cfg.json}
-cd ..
 ```
 
 ```sh
@@ -195,8 +203,8 @@ The full documentation for creating pipelines is here: https://developers.tetras
 
 ## Artifact identity (namespace, type slug and version)
 
-The namespace of this example is `private-{YOUR_ORG_SLUG}`, the type slug is `demo-ssp`, and the version is `v0.1.0`.
-This is often put together in one string as `private-{YOUR_ORG_SLUG}/demo-ssp:v0.1.0`.
+The namespace of this example is `private-training-onboarding`, the type slug is `demo-ssp`, and the version is `v0.1.0`.
+This is often put together in one string as `private-training-onboarding/demo-ssp:v0.1.0`.
 
 The combination of the kind of artifact (IDS, task script or protocol), namespace, slug and version uniquely identifies an artifact.
 
