@@ -79,6 +79,7 @@ def generate_requirements() -> None:
                 "-o",
                 str(tmp_requirements),
                 "--without-urls",
+                "--without-hashes",
             ],
             check=True,
         )
