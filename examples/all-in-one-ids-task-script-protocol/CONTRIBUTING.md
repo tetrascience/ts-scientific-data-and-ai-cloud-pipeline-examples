@@ -169,7 +169,7 @@ The ids, task script and protocol depend on each other, and should be uploaded i
 The task script has a build step which needs to be run before uploading the task script.
 The build step packages some of the dependencies into a `dependencies/` folder which is then included when uploading the task script. This step is needed when relying on private Python packages which are not available publicly on PyPI.
 
-The arfifacts are built and uploaded using the following commands:
+The artifacts are built and uploaded using the following commands:
 
 ```sh
 ts-cli publish ids/ --config {path to ts-sdk-cfg.json}
