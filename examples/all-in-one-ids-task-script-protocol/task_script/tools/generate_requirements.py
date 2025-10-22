@@ -102,7 +102,6 @@ def generate_requirements() -> None:
                         .removeprefix(abs_substring)
                         .split()[0]
                     )
-                    + " \\"
                 )
             lines.append(line)
         requirements_relative_path = "\n".join(lines)
