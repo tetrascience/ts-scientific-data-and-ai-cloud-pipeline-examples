@@ -3,7 +3,8 @@
 ## Table of Contents <!-- omit in toc -->
 
 - [Quickstart](#quickstart)
-- [Getting started](#getting-started)
+  - [Speed run](#speed-run)
+- [Overview](#overview)
 - [Installation](#installation)
 - [Running tests and updating auto-generated files](#running-tests-and-updating-auto-generated-files)
 - [Upload artifacts to TDP](#upload-artifacts-to-tdp)
@@ -18,7 +19,26 @@ The files have placeholders for `{YOUR_ORG_SLUG}` and `{YOUR_SLUG_PREFIX}` which
 - Replace `{YOUR_ORG_SLUG}` with your org-slug
 - Replace `{YOUR_SLUG_PREFIX}` with your username and a hyphen, e.g., `jfoldager-`
 
-See [Installation](#installation) and [Upload artifacts to TDP](#upload-artifacts-to-tdp) for getting started.
+See [Installation](#installation) and [Upload artifacts to TDP](#upload-artifacts-to-tdp) for more details.
+
+### Speed run
+
+Install the root package, which includes the helper tool `generate-requirements`
+```sh
+poetry install
+```
+
+Generate requirements.txt and download private dependencies for the task script build process
+```sh
+poetry run generate-requirements
+```
+
+Deploy the IDS, task script and protocol
+```sh
+ts-cli publish ids/ --config {path to ts-sdk-cfg.json}
+ts-cli publish task_script/ --config {path to ts-sdk-cfg.json}
+ts-cli publish protocol/ --config {path to ts-sdk-cfg.json}
+```
 
 ## Overview
 
@@ -90,20 +110,19 @@ After copying this example, initialize it as a git repository to keep track of c
 
 This project is using `poetry` to manage Python dependencies.
 
-A typical developer setup, including selecting the python interpreter with `pyenv`, is:
+> [!IMPORTANT]
+> If you have an active virtual environment, you will need to deactivate it before running `poetry install` by running `deactivate`.
 
 ```sh
-pyenv local 3.11
 
-cd ids
-poetry env use 3.11
+# Install helper tool for generating requirements.txt and bundling private dependencies for the task script build process
 poetry install
-cd ..
 
-cd task_script
-poetry env use 3.11
-poetry install
-cd ..
+# Install IDS in the ids folder
+poetry install --project ids
+
+# Install task script in the task_script folder
+poetry install --project task_script
 
 ```
 
@@ -144,18 +163,17 @@ The build step packages some of the dependencies into a `dependencies/` folder w
 The arfifacts are built and uploaded using the following commands:
 
 ```sh
-ts-cli publish ids --config {path to ts-sdk-cfg.json}
+ts-cli publish ids/ --config {path to ts-sdk-cfg.json}
 ```
 
 ```sh
-cd task_script
 poetry run generate-requirements
-ts-cli publish --config {path to ts-sdk-cfg.json}
+ts-cli publish task_script/ --config {path to ts-sdk-cfg.json}
 cd ..
 ```
 
 ```sh
-ts-cli publish protocol --config {path to ts-sdk-cfg.json}
+ts-cli publish protocol/ --config {path to ts-sdk-cfg.json}
 ```
 
 ### About preparing requirements.txt for Python dependencies
