@@ -10,9 +10,10 @@ hosted PyPI packages.
 import subprocess
 import tempfile
 from pathlib import Path
+import glob
 
-TASK_SCRIPT_ROOT = Path(__file__).parents[1]
-REPO_ROOT = TASK_SCRIPT_ROOT.parent
+REPO_ROOT = Path(__file__).parents[1]
+TASK_SCRIPT_ROOT = REPO_ROOT.joinpath("task_script")
 
 
 def generate_requirements() -> None:
@@ -30,6 +31,8 @@ def generate_requirements() -> None:
                 str(tmp_constraints),
                 "--with-credentials",
                 "--without-hashes",
+                "--project",
+                str(TASK_SCRIPT_ROOT),
             ],
             check=True,
         )
@@ -80,36 +83,35 @@ def generate_requirements() -> None:
                 str(tmp_requirements),
                 "--without-urls",
                 "--without-hashes",
+                "--project",
+                str(TASK_SCRIPT_ROOT),
             ],
             check=True,
         )
 
         requirements_path = TASK_SCRIPT_ROOT.joinpath("requirements.txt")
 
+        ids_wheel_path = glob.glob(str(dependencies.joinpath("demo_ssp_ids*.whl")))[0]
+        relative_ids_wheel_path = (
+            Path(ids_wheel_path).relative_to(TASK_SCRIPT_ROOT).as_posix()
+        )
+
         requirements_abs_path = tmp_requirements.read_text()
 
-        # Replace the absolute path of demo-ssp-ids with a relative path
-        # demo-ssp-ids @ file:///repos/ts-scientific-data-and-ai-cloud-pipeline-examples/examples/all-in-one-ids-task-script-protocol/task_script/dependencies/demo_ssp_ids-0.1.0-py3-none-any.whl ; python_version == "3.11" \
-
-        abs_substring = str(TASK_SCRIPT_ROOT)
-        lines = []
-        for line in requirements_abs_path.splitlines():
-            if line.startswith("demo-ssp-ids @ file") and abs_substring in line:
-                line = (
-                    "."
-                    + (
-                        line[line.index(abs_substring) :]
-                        .removeprefix(abs_substring)
-                        .split()[0]
-                    )
-                )
-            lines.append(line)
-        requirements_relative_path = "\n".join(lines)
+        # Replace the source of demo-ssp-ids with the wheel file (relative to the task_script folder)
+        requirements_w_fixed_path = "\n".join(
+            [
+                line
+                if not line.startswith("demo-ssp-ids")
+                else f"file:{relative_ids_wheel_path}"
+                for line in requirements_abs_path.splitlines()
+            ]
+        )
 
         # Add the "--find-links" option complete the requirements.txt file
         # This tells pip to look in the 'dependencies' folder for anything it can't find on PyPI
         requirements_path.write_text(
-            "--find-links dependencies\n" + requirements_relative_path
+            "--find-links dependencies\n" + requirements_w_fixed_path
         )
 
 

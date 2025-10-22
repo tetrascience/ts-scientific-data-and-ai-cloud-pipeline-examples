@@ -94,20 +94,19 @@ name = "demo-ssp-ids"
 version = "0.1.0"
 description = "Self-service IDS demo"
 optional = false
-python-versions = ">=3.11,<3.12"
+python-versions = "~3.11"
 groups = ["main"]
-files = [
-    {file = "demo_ssp_ids-0.1.0-py3-none-any.whl", hash = "sha256:33b108164b1d34c9718d81279f6c69b7ca3cbb8eabc8025eb03d6d95f138b5e5"},
-]
+files = []
+develop = false
 
 [package.dependencies]
 simplejson = ">=3.19"
 ts-ids-components = ">=0.4.1"
-ts-ids-core = ">=1.1.2,<2.0.0"
+ts-ids-core = "^1.1.2"
 
 [package.source]
-type = "file"
-url = "dependencies/demo_ssp_ids-0.1.0-py3-none-any.whl"
+type = "directory"
+url = "../ids"
 
 [[package]]
 name = "iniconfig"
@@ -906,4 +905,4 @@ reference = "ts_pypi_virtual"
 [metadata]
 lock-version = "2.1"
 python-versions = "~3.11"
-content-hash = "6f1339698ae849e68fa8580a4b5d9f39cb9a60eaf69a268046dc675193942519"
+content-hash = "a9e3eca104ec696c309323236a25ccf181fbfa6ef9bcd1fadeb60b10aedddafe"

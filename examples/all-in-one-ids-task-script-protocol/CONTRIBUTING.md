@@ -3,7 +3,8 @@
 ## Table of Contents <!-- omit in toc -->
 
 - [Quickstart](#quickstart)
-- [Getting started](#getting-started)
+  - [Speed run](#speed-run)
+- [Overview](#overview)
 - [Installation](#installation)
 - [Running tests and updating auto-generated files](#running-tests-and-updating-auto-generated-files)
 - [Upload artifacts to TDP](#upload-artifacts-to-tdp)
@@ -13,12 +14,48 @@
 
 ## Quickstart
 
-The files have placeholders for `{YOUR_ORG_SLUG}` and `{YOUR_SLUG_PREFIX}` which need to be replaced.
+Before getting started, replace the following placeholders throughout the files:
 
-- Replace `{YOUR_ORG_SLUG}` with your org-slug
-- Replace `{YOUR_SLUG_PREFIX}` with your username and a hyphen, e.g., `jfoldager-`
+- `{YOUR_ORG_SLUG}` - your organization slug
+- `{YOUR_SLUG_PREFIX}` - The artifacts use the slug `{YOUR_SLUG_PREFIX}demo-ssp`. You can replace the placeholders to add a prefix to the slugs. For example, you can set this to your username followed by a hyphen, e.g., `jfoldager-`
 
-See [Installation](#installation) and [Upload artifacts to TDP](#upload-artifacts-to-tdp) for getting started.
+Follow the instructions in [Speed run](#speed-run) or see the sections [Installation](#installation) and [Upload artifacts to TDP](#upload-artifacts-to-tdp) for more detailed next steps.
+
+### Speed run
+
+> [!NOTE]
+> The commands assume that you are in the folder `examples/all-in-one-ids-task-script-protocol`.
+>
+> Install the `ts-cli` command line tool if you don't have it already:
+>
+> ```sh
+> pipx install tetrascience-cli
+> # or if you don't have pipx:
+> pip install tetrascience-cli
+> ```
+
+Install the root package, which includes the helper tool `generate-requirements`
+
+```sh
+poetry install
+
+# Install the task script. This is needed for generate-requirements to work
+poetry install --project task_script
+```
+
+Generate requirements.txt and download private dependencies for the task script build process. These are stored in the `task_script/dependencies` folder.
+
+```sh
+poetry run generate-requirements
+```
+
+Deploy the IDS, task script and protocol
+
+```sh
+ts-cli publish ids/ --config {path to ts-sdk-cfg.json}
+ts-cli publish task_script/ --config {path to ts-sdk-cfg.json}
+ts-cli publish protocol/ --config {path to ts-sdk-cfg.json}
+```
 
 ## Overview
 
@@ -90,20 +127,19 @@ After copying this example, initialize it as a git repository to keep track of c
 
 This project is using `poetry` to manage Python dependencies.
 
-A typical developer setup, including selecting the python interpreter with `pyenv`, is:
+> [!IMPORTANT]
+> If you have an active virtual environment, you will need to deactivate it before running `poetry install` by running `deactivate`.
 
 ```sh
-pyenv local 3.11
 
-cd ids
-poetry env use 3.11
+# Install helper tool for generating requirements.txt and bundling private dependencies for the task script build process
 poetry install
-cd ..
 
-cd task_script
-poetry env use 3.11
-poetry install
-cd ..
+# Install IDS in the ids folder
+poetry install --project ids
+
+# Install task script in the task_script folder
+poetry install --project task_script
 
 ```
 
@@ -141,21 +177,19 @@ The ids, task script and protocol depend on each other, and should be uploaded i
 The task script has a build step which needs to be run before uploading the task script.
 The build step packages some of the dependencies into a `dependencies/` folder which is then included when uploading the task script. This step is needed when relying on private Python packages which are not available publicly on PyPI.
 
-The arfifacts are built and uploaded using the following commands:
+The artifacts are built and uploaded using the following commands:
 
 ```sh
-ts-cli publish ids --config {path to ts-sdk-cfg.json}
+ts-cli publish ids/ --config {path to ts-sdk-cfg.json}
 ```
 
 ```sh
-cd task_script
 poetry run generate-requirements
-ts-cli publish --config {path to ts-sdk-cfg.json}
-cd ..
+ts-cli publish task_script/ --config {path to ts-sdk-cfg.json}
 ```
 
 ```sh
-ts-cli publish protocol --config {path to ts-sdk-cfg.json}
+ts-cli publish protocol/ --config {path to ts-sdk-cfg.json}
 ```
 
 ### About preparing requirements.txt for Python dependencies
@@ -177,8 +211,8 @@ The full documentation for creating pipelines is here: https://developers.tetras
 
 ## Artifact identity (namespace, type slug and version)
 
-The namespace of this example is `private-{YOUR_ORG_SLUG}`, the type slug is `demo-ssp`, and the version is `v0.1.0`.
-This is often put together in one string as `private-{YOUR_ORG_SLUG}/demo-ssp:v0.1.0`.
+The namespace of this example is `private-training-onboarding`, the type slug is `demo-ssp`, and the version is `v0.1.0`.
+This is often put together in one string as `private-training-onboarding/demo-ssp:v0.1.0`.
 
 The combination of the kind of artifact (IDS, task script or protocol), namespace, slug and version uniquely identifies an artifact.
 
