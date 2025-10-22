@@ -1,0 +1,6 @@
+{
+  "@idsType": "{YOUR_SLUG_PREFIX}demo-ssp",
+  "@idsVersion": "v0.1.0",
+  "@idsNamespace": "private-{YOUR_ORG_SLUG}",
+  "file": "ABCDE\nFGHIJ\nKLMNO\nPQRST\nUVWXY\nZ\n"
+}

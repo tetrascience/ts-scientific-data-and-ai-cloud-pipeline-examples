@@ -1,0 +1,66 @@
+{
+  "$id": "https://ids.tetrascience.com/private-{YOUR_ORG_SLUG}/demo-ssp/v0.1.0/schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "additionalProperties": false,
+  "properties": {
+    "@idsType": {
+      "const": "{YOUR_SLUG_PREFIX}demo-ssp",
+      "type": "string"
+    },
+    "@idsVersion": {
+      "const": "v0.1.0",
+      "type": "string"
+    },
+    "@idsNamespace": {
+      "const": "private-{YOUR_ORG_SLUG}",
+      "type": "string"
+    },
+    "users": {
+      "description": "Users which produced the input data",
+      "items": {
+        "$ref": "#/definitions/User"
+      },
+      "type": "array"
+    },
+    "file": {
+      "description": "The entire raw file as a string",
+      "type": "string"
+    }
+  },
+  "required": [
+    "@idsType",
+    "@idsVersion",
+    "@idsNamespace"
+  ],
+  "type": "object",
+  "definitions": {
+    "User": {
+      "additionalProperties": false,
+      "description": "Metadata of the user executing a run.",
+      "properties": {
+        "id": {
+          "description": "Unique identifier assigned to a user.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "User name.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "User type like 'admin', 'manager', 'power user', 'standard user'. This information is usually from the instrument software.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  }
+}

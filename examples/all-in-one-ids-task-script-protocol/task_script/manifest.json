@@ -1,0 +1,12 @@
+{
+  "name": "Self-service task script example",
+  "description": "An example task script",
+  "namespace": "private-{YOUR_ORG_SLUG}",
+  "slug": "{YOUR_SLUG_PREFIX}demo-ssp",
+  "version": "v0.1.0",
+  "type": "task-script",
+  "labels": [],
+  "catalog_keys": [
+    "any"
+  ]
+}

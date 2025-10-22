@@ -1,0 +1,11 @@
+{
+  "mapping": {
+    "properties": {
+      "users": {
+        "type": "nested"
+      }
+    },
+    "dynamic_templates": []
+  },
+  "nonSearchableFields": []
+}

@@ -1,0 +1,17 @@
+{
+  "language": "python",
+  "sdkVersion": "v2",
+  "secureMode": true,
+  "runtime": "python3.11",
+  "functions": [
+    {
+      "slug": "parse-file",
+      "function": "main.main",
+      "allowedIds": {
+        "namespace": "private-{YOUR_ORG_SLUG}",
+        "slug": "{YOUR_SLUG_PREFIX}demo-ssp",
+        "version": "v0.1.0"
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "@idsType": "{YOUR_SLUG_PREFIX}demo-ssp",
+  "@idsVersion": "v0.1.0",
+  "@idsNamespace": "private-{YOUR_ORG_SLUG}",
+  "users": [
+    {
+      "name": "guest"
+    }
+  ],
+  "file": "original_file_content"
+}
