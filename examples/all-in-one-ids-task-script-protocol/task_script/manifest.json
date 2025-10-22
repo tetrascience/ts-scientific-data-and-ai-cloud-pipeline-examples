@@ -1,8 +1,8 @@
 {
   "name": "Self-service task script example",
   "description": "An example task script",
-  "namespace": "private-jfoldager",
-  "slug": "demo-ssp",
+  "namespace": "private-{YOUR_ORG_SLUG}",
+  "slug": "{YOUR_SLUG_PREFIX}demo-ssp",
   "version": "v0.1.0",
   "type": "task-script",
   "labels": [],

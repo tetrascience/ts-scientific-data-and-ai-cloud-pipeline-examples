@@ -17,9 +17,8 @@
 
 ## TODO bake this
 
-replace `{YOUR_ORG_SLUG}` with your org-slug.
-
-TODO Can you upload IDS under different slug without updating type?
+Replace `{YOUR_ORG_SLUG}` with your org-slug.
+Replace `{YOUR_SLUG_PREFIX}` with your username and a hyphen, e.g., `jfoldager-`.
 
 
 ```sh

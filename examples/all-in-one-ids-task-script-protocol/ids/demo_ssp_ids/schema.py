@@ -6,8 +6,8 @@ from ts_ids_core.schema import IdsSchema, SchemaExtraMetadataType, User
 
 
 class Model(IdsSchema):
-    NAMESPACE: ClassVar[str] = "private-jfoldager"
-    TYPE: ClassVar[str] = "demo-ssp"
+    NAMESPACE: ClassVar[str] = "private-{YOUR_ORG_SLUG}"
+    TYPE: ClassVar[str] = "{YOUR_SLUG_PREFIX}demo-ssp"
     VERSION: ClassVar[str] = "v0.1.0"
 
     schema_extra_metadata: ClassVar[SchemaExtraMetadataType] = {

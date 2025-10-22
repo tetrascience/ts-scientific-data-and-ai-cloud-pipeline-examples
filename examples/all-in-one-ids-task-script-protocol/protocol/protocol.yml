@@ -13,8 +13,8 @@ config:
 steps:
   - description: Transform example data to IDS
     task:
-      namespace: private-jfoldager
-      slug: demo-ssp
+      namespace: private-{YOUR_ORG_SLUG}
+      slug: {YOUR_SLUG_PREFIX}demo-ssp
       version: v0.1.0
       function: parse-file
     input:
